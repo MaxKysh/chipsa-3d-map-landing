@@ -1,0 +1,353 @@
+/* ============================================================
+   CHIPSA LANDER DESIGN SYSTEM
+   Ported from the Claude Design handoff bundle:
+   fonts + colors + typography + spacing tokens, then the base layer.
+   Style everything through these custom properties — never hard-code hex.
+   ============================================================ */
+
+/* ---- Fonts ---- */
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;600;700;800&family=Arimo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* ============================================================
+   COLOR TOKENS — dark base, surfaces lift through tone not shadow.
+   ============================================================ */
+:root {
+  /* Raw ink scale (dark base, slightly teal-cooled) */
+  --ink-900: #05080A;
+  --ink-850: #0A1113;
+  --ink-800: #131E22;
+  --ink-700: #1E2C33;
+  --ink-600: #2A3C44;
+  --ink-500: #374E58;
+  --ink-400: #466069;
+  --ink-300: #5C7882;
+
+  /* Paper scale (rare inverted / light section) */
+  --paper-000: #FFFFFF;
+  --paper-050: #F3F5F4;
+  --paper-100: #E6EAE9;
+  --paper-200: #D2D9D8;
+
+  /* Foreground on dark */
+  --fg-1: #F4F7F6;
+  --fg-2: #B9C5C7;
+  --fg-3: #7E8E92;
+  --fg-4: #56656A;
+
+  /* Foreground on light surfaces */
+  --fg-on-paper-1: #0A0E0F;
+  --fg-on-paper-2: #3A474B;
+  --fg-on-paper-3: #6A7679;
+
+  /* Brand accents (from the mark) */
+  --lime-400: #B6C24E;
+  --green-500: #5FB85C;
+  --teal-500: #1FA39A;
+  --teal-600: #15838C;
+  --deepteal-700: #076281;
+  --deepteal-800: #054C66;
+
+  /* Signature gradients */
+  --grad-brand: linear-gradient(115deg, #6FBE56 0%, #1FA39A 48%, #0A6E8C 100%);
+  --grad-brand-soft: linear-gradient(115deg, #6FBE56 0%, #1FA39A 55%, #0A6E8C 100%);
+  --grad-atmos: radial-gradient(120% 90% at 78% 8%, rgba(31,163,154,0.20) 0%, rgba(10,110,140,0.10) 35%, rgba(10,14,15,0) 68%);
+
+  /* Semantic status */
+  --positive: #5FB85C;
+  --warning: #E0A53C;
+  --critical: #E5604D;
+  --info: #1FA39A;
+
+  /* Semantic aliases — reference these in product CSS */
+  --bg-page: var(--ink-850);
+  --bg-page-alt: var(--ink-800);
+  --surface-1: var(--ink-700);
+  --surface-2: var(--ink-600);
+  --surface-3: var(--ink-500);
+  --surface-invert: var(--paper-050);
+
+  --text-strong: var(--fg-1);
+  --text-body: var(--fg-2);
+  --text-muted: var(--fg-3);
+  --text-faint: var(--fg-4);
+  --text-on-invert: var(--fg-on-paper-1);
+  --text-on-invert-muted: var(--fg-on-paper-2);
+
+  --accent: var(--teal-500);
+  --accent-strong: var(--green-500);
+  --accent-deep: var(--deepteal-700);
+  --accent-text: #57D6C8;
+  --accent-text-hover: #7FE6DA;
+
+  --border-subtle: var(--ink-400);
+  --border-strong: var(--ink-300);
+  --border-on-invert: var(--paper-200);
+
+  --focus-ring: #57D6C8;
+}
+
+/* ============================================================
+   TYPOGRAPHY TOKENS — bold scale, type runs large.
+   ============================================================ */
+:root {
+  --font-display: 'Geologica', system-ui, sans-serif;
+  --font-sans: 'Helvetica Neue', 'Helvetica', 'Arimo', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  --w-regular: 400;
+  --w-medium: 500;
+  --w-semibold: 600;
+  --w-bold: 700;
+  --w-black: 900;
+
+  --t-mega: clamp(3.5rem, 9vw, 9.5rem);
+  --t-display: clamp(2.75rem, 6vw, 6rem);
+  --t-h1: clamp(2.25rem, 4.2vw, 4rem);
+  --t-h2: clamp(1.75rem, 2.8vw, 2.75rem);
+  --t-h3: clamp(1.375rem, 1.8vw, 1.875rem);
+
+  --t-lead: clamp(1.4rem, 1.9vw, 1.875rem);
+  --t-body-lg: 1.375rem;
+  --t-body: 1.1875rem;
+  --t-body-sm: 1.0625rem;
+
+  --t-eyebrow: 0.8125rem;
+  --t-mono-sm: 0.75rem;
+
+  --lh-tight: 0.98;
+  --lh-snug: 1.06;
+  --lh-head: 1.12;
+  --lh-body: 1.55;
+  --lh-loose: 1.7;
+
+  --ls-mega: -0.03em;
+  --ls-display: -0.02em;
+  --ls-head: -0.015em;
+  --ls-body: 0em;
+  --ls-eyebrow: 0.22em;
+  --ls-mono: 0.04em;
+}
+
+/* ============================================================
+   SPACING, RADII, LAYOUT, MOTION
+   ============================================================ */
+:root {
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+  --s-11: 11rem;
+  --s-12: 14rem;
+
+  --section-y: clamp(5rem, 10vw, 11rem);
+  --section-y-tight: clamp(3.5rem, 6vw, 6rem);
+
+  --gutter: clamp(1.25rem, 5vw, 6rem);
+  --gutter-tight: clamp(1rem, 3vw, 2.5rem);
+  --content-max: 1680px;
+  --measure-max: 68ch;
+
+  --r-0: 0px;
+  --r-1: 4px;
+  --r-2: 8px;
+  --r-3: 10px;
+  --r-4: 12px;
+  --r-pill: 0px;
+
+  --bw: 1px;
+  --bw-strong: 1.5px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-snap: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 140ms;
+  --dur-base: 240ms;
+  --dur-slow: 420ms;
+  --dur-reveal: 720ms;
+
+  --z-base: 1;
+  --z-sticky: 100;
+  --z-nav: 200;
+  --z-overlay: 800;
+  --z-modal: 900;
+  --z-toast: 1000;
+}
+
+/* ============================================================
+   BASE LAYER — element defaults + brand utilities.
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg-page);
+  color: var(--text-body);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  font-weight: var(--w-regular);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "cv01";
+}
+
+::selection { background: var(--green-500); color: #07090A; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--text-strong);
+  font-weight: var(--w-semibold);
+  line-height: var(--lh-head);
+  letter-spacing: var(--ls-head);
+  text-wrap: balance;
+}
+h1 { font-size: var(--t-h1); line-height: var(--lh-snug); letter-spacing: var(--ls-display); }
+h2 { font-size: var(--t-h2); }
+h3 { font-size: var(--t-h3); }
+
+p { text-wrap: pretty; }
+
+/* Type utilities */
+.t-mega { font-family: var(--font-display); font-weight: var(--w-semibold);
+  font-size: var(--t-mega); line-height: var(--lh-tight); letter-spacing: var(--ls-mega);
+  color: var(--text-strong); text-wrap: balance; }
+.t-display { font-family: var(--font-display); font-weight: var(--w-semibold);
+  font-size: var(--t-display); line-height: var(--lh-snug); letter-spacing: var(--ls-display);
+  color: var(--text-strong); text-wrap: balance; }
+.t-lead { font-size: var(--t-lead); line-height: var(--lh-body); color: var(--text-body);
+  font-weight: var(--w-regular); }
+.t-mono { font-family: var(--font-mono); font-size: var(--t-mono-sm);
+  letter-spacing: var(--ls-mono); }
+
+/* Eyebrow / kicker — mono, uppercase, wide tracking, leading hairline */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--t-eyebrow);
+  font-weight: var(--w-medium);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent-text);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.75rem; height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+/* Gradient ink — single emphasized headline word */
+.ink-grad {
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Links — animated, not a color flip */
+a { color: inherit; text-decoration: none; }
+
+.link {
+  position: relative;
+  color: var(--text-strong);
+  font-weight: var(--w-medium);
+  cursor: pointer;
+  padding-bottom: 2px;
+}
+.link::after {
+  content: "";
+  position: absolute; left: 0; bottom: 0;
+  width: 100%; height: 1.5px;
+  background: var(--accent-text);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.link:hover::after { transform: scaleX(1); }
+
+.link-arrow { display: inline-flex; align-items: center; gap: var(--s-2);
+  color: var(--accent-text); font-weight: var(--w-medium); cursor: pointer;
+  transition: color var(--dur-base) var(--ease-out); }
+.link-arrow .arw { transition: transform var(--dur-base) var(--ease-expo); }
+.link-arrow:hover { color: #FFFFFF; }
+.link-arrow:hover .arw { transform: translate(4px,-4px); }
+
+/* Layout helpers */
+.bleed { width: 100%; }
+.shell { max-width: var(--content-max); margin-inline: auto;
+  padding-inline: var(--gutter); }
+.measure { max-width: var(--measure-max); }
+.section { padding-block: var(--section-y); }
+.section-tight { padding-block: var(--section-y-tight); }
+
+/* Surfaces */
+.surface-1 { background: var(--surface-1); }
+.surface-2 { background: var(--surface-2); }
+.surface-invert { background: var(--surface-invert); color: var(--text-on-invert); }
+.surface-invert h1, .surface-invert h2, .surface-invert h3 { color: var(--text-on-invert); }
+
+/* Scroll-triggered reveal — on by default; end-state is base style */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity var(--dur-reveal) var(--ease-out),
+                transform var(--dur-reveal) var(--ease-out);
+    will-change: opacity, transform;
+  }
+  .reveal[data-inview] { opacity: 1; transform: none; }
+  .reveal.delay-1 { transition-delay: 90ms; }
+  .reveal.delay-2 { transition-delay: 180ms; }
+  .reveal.delay-3 { transition-delay: 270ms; }
+}
+
+/* Focus — visible, branded */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+[role="button"], button, .link, .link-arrow, [data-interactive] { cursor: pointer; }
+
+/* ============================================================
+   BUTTON (clbtn) — signature staged hover. Ported from the DS bundle.
+   ============================================================ */
+@property --mx { syntax: '<length-percentage>'; inherits: true; initial-value: 50%; }
+@property --my { syntax: '<length-percentage>'; inherits: true; initial-value: 50%; }
+.clbtn { position:relative; overflow:hidden; isolation:isolate; display:inline-flex;
+  align-items:center; border:none; border-radius:var(--r-2); cursor:pointer;
+  font-family:var(--font-sans); font-weight:var(--w-semibold); line-height:1;
+  letter-spacing:-0.005em; text-decoration:none; white-space:nowrap;
+  transform-origin:center; --mx:50%; --my:50%;
+  transition: transform var(--dur-base) var(--ease-expo); }
+.clbtn:not(.clbtn--ghost):not([data-disabled]):hover { transform: scale(1.03); }
+.clbtn__base { position:relative; z-index:1; display:inline-flex; align-items:center; gap:.6em; }
+.clbtn__reveal { position:absolute; inset:0; opacity:1;
+  clip-path: circle(0px at var(--mx) var(--my));
+  transition: clip-path 260ms var(--ease-out); }
+.clbtn:not([data-disabled]):hover .clbtn__reveal { clip-path: circle(150% at var(--mx) var(--my));
+  transition: clip-path 900ms var(--ease-expo); }
+.clbtn__reveal--flip { z-index:2; display:inline-flex; align-items:center;
+  background: var(--cl-inv-bg); color: var(--cl-inv-text); }
+.clbtn__reveal--wash { z-index:0; background: var(--cl-inv-bg); }
+.clbtn__spot { position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0;
+  background: radial-gradient(140px 140px at var(--mx) var(--my), var(--cl-spot), transparent 62%);
+  mix-blend-mode: var(--cl-blend); transition: opacity 200ms var(--ease-out); }
+.clbtn:not([data-disabled]):hover .clbtn__spot { opacity:1; transition: opacity var(--dur-base) var(--ease-out); }
+.clbtn__arw { display:inline-block; font-weight:var(--w-medium);
+  transition: transform var(--dur-base) var(--ease-expo) 90ms; }
+.clbtn:not([data-disabled]):hover .clbtn__arw { transform: translate(4px,-4px); }
+@media (prefers-reduced-motion: reduce) {
+  .clbtn, .clbtn__reveal, .clbtn__spot, .clbtn__arw { transition: none !important; }
+}
