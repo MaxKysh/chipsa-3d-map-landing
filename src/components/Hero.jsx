@@ -84,7 +84,7 @@ export function Nav({ t, onContact }) {
 
   return (
     <header className={`cl-nav${onLight ? ' cl-nav--on-light' : ''}`}>
-      <div className="cl-nav__inner shell">
+      <div className="cl-nav__inner">
         <a href="#top" className="cl-nav__logo" aria-label="Chipsa">
           <img src={ASSETS.logo} alt="Chipsa" width="352" height="58" />
           <span className="cl-nav__dev">DEV</span>

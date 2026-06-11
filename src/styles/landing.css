@@ -19,7 +19,9 @@ img, video { display: block; }
   background: transparent;
   transition: color var(--dur-base) var(--ease-out);
 }
-.cl-nav__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--s-6); padding-block: 16px; }
+/* full-width: logo pinned to the viewport's left gutter, CTA to the right —
+   outside the centered content shell. */
+.cl-nav__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--s-6); width: 100%; padding-block: 16px; padding-inline: 20px; }
 .cl-nav__logo { display: inline-flex; align-items: flex-end; gap: 7px; }
 .cl-nav__logo img { height: 26px; width: auto; }
 .cl-nav__dev { font-family: var(--font-mono); font-weight: var(--w-bold); font-size: .95rem; letter-spacing: .06em; line-height: 1; color: var(--deepteal-700); position: relative; top: 1px; }
