@@ -348,7 +348,7 @@ a { color: inherit; text-decoration: none; }
 @property --mx { syntax: '<length-percentage>'; inherits: true; initial-value: 50%; }
 @property --my { syntax: '<length-percentage>'; inherits: true; initial-value: 50%; }
 .clbtn { position:relative; overflow:hidden; isolation:isolate; display:inline-flex;
-  align-items:center; border:none; border-radius:var(--r-2); cursor:pointer;
+  align-items:center; border:none; padding:0; border-radius:var(--r-2); cursor:pointer;
   font-family:var(--font-sans); font-weight:var(--w-semibold); line-height:1;
   letter-spacing:-0.005em; text-decoration:none; white-space:nowrap;
   transform-origin:center; --mx:50%; --my:50%;
@@ -360,8 +360,10 @@ a { color: inherit; text-decoration: none; }
   transition: clip-path 260ms var(--ease-out); }
 .clbtn:not([data-disabled]):hover .clbtn__reveal { clip-path: circle(150% at var(--rx, 50%) var(--ry, 50%));
   transition: clip-path 900ms var(--ease-expo); }
-.clbtn__reveal--flip { z-index:2; display:inline-flex; align-items:center;
-  background: var(--cl-inv-bg); color: var(--cl-inv-text); }
+/* match the base face exactly (same gap, content-sized, not stretched) so the
+   arrow doesn't jump between layers when the reveal sweeps over it */
+.clbtn__reveal--flip { z-index:2; display:inline-flex; align-items:center; gap:.6em;
+  right:auto; bottom:auto; background: var(--cl-inv-bg); color: var(--cl-inv-text); }
 .clbtn__reveal--wash { z-index:0; background: var(--cl-inv-bg); }
 .clbtn__spot { position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0;
   background: radial-gradient(140px 140px at var(--mx) var(--my), var(--cl-spot), transparent 62%);

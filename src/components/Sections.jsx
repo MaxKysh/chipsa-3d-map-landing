@@ -149,8 +149,10 @@ export function CTA({ t }) {
       <img className="cl-cta__bg" src={ASSETS.crowd} alt="" aria-hidden="true" width="1920" height="1434" />
       <div className="cl-cta__scrim" aria-hidden="true" />
       <div className="shell cl-cta__grid">
-        <Reveal>
+        <Reveal className="cl-cta__head">
           <h2 className="cl-cta__title">{c.title}</h2>
+        </Reveal>
+        <Reveal delay={1} className="cl-cta__body">
           <p className="cl-cta__note">{c.note}</p>
           <div className="cl-cta__btn">
             <Button size="lg" variant="primary" icon href="https://3d-plan.chipsa.ru/" target="_blank" rel="noopener noreferrer">
