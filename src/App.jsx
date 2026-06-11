@@ -5,6 +5,7 @@ import { COPY } from './data/copy.js';
 import { Nav, MobileNav, Hero } from './components/Hero.jsx';
 import { Demo } from './components/Demo.jsx';
 import { What, Value, Niches, Process, About, CTA, SiteFooter } from './components/Sections.jsx';
+import { initSmoothScroll } from './lib/smoothScroll.js';
 
 const HERO_MODE = 'video'; // 'video' | 'wash'
 const REVEAL = true;
@@ -21,6 +22,8 @@ export default function App() {
   }, []);
 
   React.useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+
+  React.useEffect(() => initSmoothScroll(), []);
 
   const copy = COPY[lang];
 
