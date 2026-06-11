@@ -11,14 +11,14 @@ const HERO_MODE = 'video'; // 'video' | 'wash'
 const REVEAL = true;
 
 export default function App() {
-  // Language comes from the URL (?lang=ru | ?lang=en); default Russian.
-  // Send the ?lang=ru link to RU conferences, ?lang=en to international ones.
+  // Language comes from the URL (?lang=en | ?lang=ru); default English.
+  // Send the bare link (or ?lang=en) to international conferences, ?lang=ru to RU ones.
   const lang = React.useMemo(() => {
     try {
       const p = new URLSearchParams(window.location.search).get('lang');
       if (p === 'en' || p === 'ru') return p;
     } catch (e) {}
-    return 'ru';
+    return 'en';
   }, []);
 
   React.useEffect(() => { document.documentElement.lang = lang; }, [lang]);
