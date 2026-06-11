@@ -1,10 +1,11 @@
 /* Chipsa Lander design-system components, ported from the handoff bundle.
    Button styles live in design-system.css (.clbtn). */
+import React from 'react';
 
-/* ---- ArrowLink — label sits, the corner-mark advances; goes white on hover ---- */
+/* ---- ArrowLink — label sits, the corner-mark advances; goes brand teal on hover ---- */
 export function ArrowLink({ children, href = '#', glyph = '↗', tone = 'accent', onClick, style, ...rest }) {
   const color = tone === 'strong' ? 'var(--text-strong)' : 'var(--accent-text)';
-  const hoverColor = '#FFFFFF';
+  const hoverColor = 'var(--accent-text)';
   return (
     <a
       href={href}
@@ -98,10 +99,55 @@ export function Button({
   );
 }
 
-/* ---- Stat — big display number + mono label; optional gradient ink ---- */
-export function Stat({ value, label, suffix = '', grad = false, align = 'start', style, ...rest }) {
+/* mechanical-counter step config — same step count for every stat so they all
+   reach their target in the same number of ticks; index staggers the start. */
+const COUNT_STEPS = 24;
+const COUNT_STEP_MS = 42;
+const COUNT_STAGGER = 340;
+
+/* ---- Stat — big display number + mono label; optional gradient ink.
+   Numeric values count up like a mechanical counter when scrolled into view. ---- */
+export function Stat({ value, label, suffix = '', grad = false, align = 'start', index = 0, style, ...rest }) {
+  // split a leading integer from any trailing glyphs ('200+' -> 200 / '+', 'RS · RU' -> no number)
+  const m = String(value).match(/^(\d+)(.*)$/);
+  const target = m ? parseInt(m[1], 10) : null;
+  const tail = m ? m[2] : '';
+  const ref = React.useRef(null);
+  const [shown, setShown] = React.useState(target == null ? value : 0);
+
+  React.useEffect(() => {
+    if (target == null) { setShown(value); return; }
+    const el = ref.current; if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setShown(target); return; }
+    const timers = [];
+    let started = false;
+    const stop = () => {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+    const run = () => {
+      if (started) return; started = true; stop();
+      const start = index * COUNT_STAGGER;
+      for (let s = 1; s <= COUNT_STEPS; s++) {
+        timers.push(setTimeout(() => setShown(Math.round((target * s) / COUNT_STEPS)), start + s * COUNT_STEP_MS));
+      }
+    };
+    function check() {
+      if (started) return;
+      const r = el.getBoundingClientRect();
+      const h = window.innerHeight || document.documentElement.clientHeight;
+      if (r.top < h * 0.85 && r.bottom > 0) run();
+    }
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check, { passive: true });
+    check();
+    [60, 300, 800].forEach((ms) => timers.push(setTimeout(check, ms)));
+    return () => { stop(); timers.forEach(clearTimeout); };
+  }, [target, value, index]);
+
   return (
     <div
+      ref={ref}
       style={{
         display: 'flex', flexDirection: 'column', gap: 'var(--s-2)', textAlign: align,
         alignItems: align === 'center' ? 'center' : 'flex-start', ...style,
@@ -111,13 +157,14 @@ export function Stat({ value, label, suffix = '', grad = false, align = 'start',
       <span style={{
         fontFamily: 'var(--font-display)', fontWeight: 'var(--w-bold)',
         fontSize: 'clamp(2.5rem, 5vw, 4.25rem)', lineHeight: 0.95, letterSpacing: '-0.03em',
+        fontVariantNumeric: 'tabular-nums',
         color: grad ? 'transparent' : 'var(--text-strong)',
         background: grad ? 'var(--grad-brand)' : 'none',
         WebkitBackgroundClip: grad ? 'text' : 'border-box',
         backgroundClip: grad ? 'text' : 'border-box',
       }}>
-        {value}
-        <span style={{ fontSize: '0.55em', verticalAlign: 'baseline' }}>{suffix}</span>
+        {target == null ? shown : <>{shown}{tail}</>}
+        {suffix && <span style={{ fontSize: '0.55em', verticalAlign: 'baseline' }}>{suffix}</span>}
       </span>
       <span style={{
         fontFamily: 'var(--font-mono)', fontSize: 'var(--t-mono-sm)', letterSpacing: 'var(--ls-mono)',

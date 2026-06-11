@@ -36,7 +36,7 @@ export function What({ t }) {
     <Section id="what" invert>
       <SectionHead num={w.num} kicker={w.kicker} title={w.title} lede={w.lede} invert />
       <div>
-        <Reveal>
+        <Reveal className="rv-scale">
           <Frame video={ASSETS.tour} label={w.tour.label} ratio="16 / 9" invert />
         </Reveal>
         <Caption kicker={w.tour.capKicker} invert>{w.tour.cap}</Caption>
@@ -51,11 +51,13 @@ export function Value({ t }) {
   return (
     <Section id="value">
       <SectionHead num={v.num} kicker={v.kicker} title={v.title} lede={v.lede} />
-      <Reveal className="cl-grid-3">
+      <div className="cl-grid-3">
         {v.items.map((it, i) => (
-          <Card key={i} icon={it.icon} index={String(i + 1).padStart(2, '0')} title={it.title} body={it.body} topRule />
+          <Reveal key={i} className="rv-scale" style={{ transitionDelay: `${i * 90}ms` }}>
+            <Card icon={it.icon} index={String(i + 1).padStart(2, '0')} title={it.title} body={it.body} topRule />
+          </Reveal>
         ))}
-      </Reveal>
+      </div>
     </Section>
   );
 }
@@ -66,14 +68,16 @@ export function Niches({ t }) {
   return (
     <Section id="niches">
       <SectionHead num={n.num} kicker={n.kicker} title={n.title} lede={n.lede} />
-      <Reveal className="cl-grid-niche">
+      <div className="cl-grid-niche">
         {n.items.map((it, i) => (
-          <Card key={i} icon={it.icon} title={it.title} body={it.body} compact />
+          <Reveal key={i} className="rv-scale" style={{ transitionDelay: `${i * 80}ms` }}>
+            <Card icon={it.icon} title={it.title} body={it.body} compact />
+          </Reveal>
         ))}
-        <div className="cl-niche-full">
+        <Reveal className="cl-niche-full rv-scale" style={{ transitionDelay: `${n.items.length * 80}ms` }}>
           <Card icon={n.full.icon} title={n.full.title} body={n.full.body} compact />
-        </div>
-      </Reveal>
+        </Reveal>
+      </div>
     </Section>
   );
 }
@@ -87,17 +91,19 @@ export function Process({ t }) {
       <div className="cl-process">
         {p.steps.map((s, i) => (
           <Reveal key={i} delay={i % 2 ? 1 : 0} className="cl-process__row">
-            <span className="cl-process__num">{s.num}</span>
+            <div className="cl-process__lead">
+              <span className="cl-process__num">{s.num}</span>
+              <span className="cl-process__dur">{s.duration}</span>
+            </div>
             <div className="cl-process__main">
               <h3 className="cl-process__title">{s.title}</h3>
               <p className="cl-process__body">{s.body}</p>
             </div>
-            <span className="cl-process__dur">{s.duration}</span>
           </Reveal>
         ))}
       </div>
       <div className="cl-process__media">
-        <Reveal>
+        <Reveal className="rv-scale">
           <Frame src={ASSETS.macbookLive} label={p.macbook.label + ' · ' + p.macbook.name} ratio="16 / 9" invert />
         </Reveal>
         <Caption kicker={p.macbook.capKicker} invert>{p.macbook.cap}</Caption>
@@ -115,14 +121,21 @@ export function About({ t }) {
       <div className="cl-about">
         <Reveal className="cl-about__text">
           {a.paras.map((para, i) => (
-            <p key={i}>{para[0] && <strong>{para[0]}</strong>}{para[1]}</p>
+            <p key={i}>
+              {para[0] && <strong>{para[0]}</strong>}
+              {para[1]}
+              {para[2] && <a className="link" href={para[2].href} target="_blank" rel="noopener noreferrer">{para[2].label}</a>}
+              {para[3]}
+            </p>
           ))}
         </Reveal>
-        <Reveal delay={1} className="cl-about__stats">
+        <div className="cl-about__stats">
           {a.stats.map((s, i) => (
-            <Stat key={i} value={s.num} label={s.label} grad={i === 0} />
+            <Reveal key={i} className="rv-scale" style={{ transitionDelay: `${i * 90}ms` }}>
+              <Stat value={s.num} label={s.label} grad={i === 0} index={i} />
+            </Reveal>
           ))}
-        </Reveal>
+        </div>
       </div>
     </Section>
   );
@@ -140,7 +153,7 @@ export function CTA({ t }) {
           <h2 className="cl-cta__title">{c.title}</h2>
           <p className="cl-cta__note">{c.note}</p>
           <div className="cl-cta__btn">
-            <Button size="lg" variant="primary" icon onClick={() => { window.location.hash = '#demo'; }}>
+            <Button size="lg" variant="primary" icon href="https://3d-plan.chipsa.ru/" target="_blank" rel="noopener noreferrer">
               {t.hero.primary}
             </Button>
           </div>
@@ -149,7 +162,7 @@ export function CTA({ t }) {
           {c.contacts.map((ct, i) => (
             <li key={i}>
               <span className="cl-cta__key">{ct.key}</span>
-              <ArrowLink href={ct.href} tone="strong">{ct.val}</ArrowLink>
+              <ArrowLink href={ct.href} tone="strong" {...(ct.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{ct.val}</ArrowLink>
             </li>
           ))}
         </Reveal>

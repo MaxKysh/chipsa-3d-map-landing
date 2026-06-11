@@ -86,8 +86,11 @@ export function Section({ id, invert = false, tight = false, children, style }) 
 export function SectionHead({ num, kicker, title, lede, invert = false }) {
   return (
     <div className="cl-head">
-      <Reveal className="cl-head__rail">
-        <span className="cl-head__num">{num}</span>
+      <Reveal className="cl-head__rail rv-left">
+        <span className="cl-head__lead">
+          <span className="cl-head__num">{num}</span>
+          <span className="cl-head__rule" aria-hidden="true" />
+        </span>
         <span className="cl-head__kicker">{kicker}</span>
       </Reveal>
       <div className="cl-head__body">
@@ -104,21 +107,40 @@ export function SectionHead({ num, kicker, title, lede, invert = false }) {
 
 /* ---- Framed media (small radius, no shadow).
    Videos adopt their clip's real aspect ratio on load so they never crop. ---- */
-export function Frame({ src, video, poster, label, ratio = '4 / 3', topRule = false, invert = false, style }) {
+export function Frame({ src, video, poster, label, ratio = '4 / 3', topRule = false, invert = false, zoom = 1.5, style }) {
   const isVideo = !!video;
   const [natRatio, setNatRatio] = React.useState(null);
+  const imgRef = React.useRef(null);
   const onMeta = (e) => {
     const v = e.currentTarget;
     if (v.videoWidth && v.videoHeight) setNatRatio(v.videoWidth + ' / ' + v.videoHeight);
   };
+  /* loupe: container stays fixed; the image scales and pans to follow the cursor
+     via transform-origin, so moving the mouse explores the magnified image. */
+  const onMove = (e) => {
+    const img = imgRef.current; if (!img) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    img.style.transformOrigin = `${x}% ${y}%`;
+    img.style.transform = `scale(${zoom})`;
+  };
+  const onLeave = () => {
+    const img = imgRef.current; if (!img) return;
+    img.style.transform = 'scale(1)';
+    img.style.transformOrigin = 'center';
+  };
   return (
     <figure
       className="cl-frame"
+      onMouseMove={isVideo ? undefined : onMove}
+      onMouseLeave={isVideo ? undefined : onLeave}
       style={{
         position: 'relative', margin: 0, width: '100%',
         aspectRatio: isVideo ? (natRatio || ratio) : ratio, overflow: 'hidden',
         borderRadius: 'var(--r-4)', border: 'none',
         background: invert ? '#0B1416' : 'var(--surface-1)',
+        cursor: isVideo ? undefined : 'zoom-in',
         ...style,
       }}
     >
@@ -129,8 +151,13 @@ export function Frame({ src, video, poster, label, ratio = '4 / 3', topRule = fa
         />
       ) : (
         <img
+          ref={imgRef}
           src={src} alt={label || ''} loading="lazy"
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block',
+            transform: 'scale(1)', transformOrigin: 'center',
+            transition: 'transform var(--dur-base) var(--ease-out)', willChange: 'transform',
+          }}
         />
       )}
     </figure>

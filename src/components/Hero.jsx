@@ -4,19 +4,64 @@ import { Button } from './ds.jsx';
 import { Reveal, Frame } from './primitives.jsx';
 import { ASSETS } from '../data/assets.js';
 
-function LangToggle({ lang, setLang }) {
+/* Mobile nav — a thumb-reach FAB at bottom-right that morphs (burger ↔ X) and
+   springs open a menu anchored to the same corner. Replaces the top bar on phones. */
+export function MobileNav({ t, onContact }) {
+  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = ''; window.removeEventListener('keydown', onKey); };
+  }, [open]);
+
   return (
-    <div className="cl-lang">
-      {['ru', 'en'].map((o) => (
-        <button key={o} onClick={() => setLang(o)} className={lang === o ? 'is-active' : ''} aria-pressed={lang === o}>
-          {o}
-        </button>
-      ))}
+    <div className={`cl-mnav${open ? ' is-open' : ''}`}>
+      <div className="cl-mnav__backdrop" onClick={() => setOpen(false)} aria-hidden="true" />
+
+      <nav className="cl-mnav__panel" aria-hidden={!open}>
+        <a href="#top" className="cl-mnav__logo" aria-label="Chipsa" onClick={() => setOpen(false)}>
+          <img src={ASSETS.logo} alt="Chipsa" />
+          <span className="cl-nav__dev">DEV</span>
+        </a>
+        <ul className="cl-mnav__links">
+          {t.nav.links.map((l, i) => (
+            <li key={l.key} style={{ '--i': i }}>
+              <a href={'#' + l.key} onClick={() => setOpen(false)}>{l.label}</a>
+            </li>
+          ))}
+        </ul>
+        <a
+          className="cl-mnav__tg"
+          href="https://t.me/maxkysh"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setOpen(false)}
+        >
+          Telegram <span>@maxkysh ↗</span>
+        </a>
+        <div className="cl-mnav__foot">
+          <Button size="sm" variant="primary" icon onClick={() => { setOpen(false); onContact(); }}>{t.nav.cta}</Button>
+        </div>
+      </nav>
+
+      <button
+        className="cl-burger"
+        aria-label={open ? 'Закрыть меню' : 'Открыть меню'}
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span className="cl-burger__box" aria-hidden="true">
+          <span className="cl-burger__line" />
+          <span className="cl-burger__line" />
+          <span className="cl-burger__line" />
+        </span>
+      </button>
     </div>
   );
 }
 
-export function Nav({ t, lang, setLang, onContact }) {
+export function Nav({ t, onContact }) {
   const [onLight, setOnLight] = React.useState(false);
   React.useEffect(() => {
     const read = () => {
@@ -42,6 +87,7 @@ export function Nav({ t, lang, setLang, onContact }) {
       <div className="cl-nav__inner shell">
         <a href="#top" className="cl-nav__logo" aria-label="Chipsa">
           <img src={ASSETS.logo} alt="Chipsa" />
+          <span className="cl-nav__dev">DEV</span>
         </a>
         <nav className="cl-nav__links">
           {t.nav.links.map((l) => (
@@ -49,7 +95,6 @@ export function Nav({ t, lang, setLang, onContact }) {
           ))}
         </nav>
         <div className="cl-nav__right">
-          <LangToggle lang={lang} setLang={setLang} />
           <Button size="sm" variant="primary" icon onClick={onContact}>{t.nav.cta}</Button>
         </div>
       </div>
@@ -114,6 +159,10 @@ export function Hero({ t, heroMode, onContact, onDemo }) {
           <Button size="lg" variant="invert" icon onClick={onContact}>{h.secondary}</Button>
         </Reveal>
       </div>
+      <a className="cl-hero__scroll" href="#what" aria-label={h.scroll}>
+        <span className="cl-hero__scroll-label">{h.scroll}</span>
+        <span className="cl-hero__scroll-arrow" aria-hidden="true"><i /></span>
+      </a>
     </section>
   );
 }
