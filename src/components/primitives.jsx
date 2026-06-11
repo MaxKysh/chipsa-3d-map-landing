@@ -107,14 +107,43 @@ export function SectionHead({ num, kicker, title, lede, invert = false }) {
 
 /* ---- Framed media (small radius, no shadow).
    Videos adopt their clip's real aspect ratio on load so they never crop. ---- */
-export function Frame({ src, video, poster, label, ratio = '4 / 3', topRule = false, invert = false, zoom = 1.5, style }) {
+export function Frame({ src, video, poster, label, ratio = '4 / 3', invert = false, zoomable = false, zoom = 1.5, style }) {
   const isVideo = !!video;
+  const loupe = zoomable && !isVideo; // cursor-driven magnify, opt-in (small paired images)
+  const [ratioW, ratioH] = String(ratio).split('/').map((n) => parseFloat(n.trim()) || 1); // intrinsic-size hint for the img
   const [natRatio, setNatRatio] = React.useState(null);
+  const [loadVideo, setLoadVideo] = React.useState(false); // defer offscreen video downloads
+  const figRef = React.useRef(null);
   const imgRef = React.useRef(null);
   const onMeta = (e) => {
     const v = e.currentTarget;
     if (v.videoWidth && v.videoHeight) setNatRatio(v.videoWidth + ' / ' + v.videoHeight);
   };
+
+  // Lazy-load videos: only fetch/play once the frame nears the viewport, so the
+  // offscreen clips don't compete for bandwidth on first paint. Scroll-based
+  // (mirrors the reveal system) so it fires reliably across environments.
+  React.useEffect(() => {
+    if (!isVideo) return;
+    const el = figRef.current; if (!el) return;
+    let done = false;
+    const check = () => {
+      if (done) return;
+      const r = el.getBoundingClientRect();
+      const h = window.innerHeight || document.documentElement.clientHeight;
+      if (r.top < h + 300 && r.bottom > -300) { done = true; cleanup(); setLoadVideo(true); }
+    };
+    const cleanup = () => {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check, { passive: true });
+    check();
+    const timers = [0, 300, 800].map((ms) => setTimeout(check, ms));
+    return () => { cleanup(); timers.forEach(clearTimeout); };
+  }, [isVideo]);
+
   /* loupe: container stays fixed; the image scales and pans to follow the cursor
      via transform-origin, so moving the mouse explores the magnified image. */
   const onMove = (e) => {
@@ -132,27 +161,30 @@ export function Frame({ src, video, poster, label, ratio = '4 / 3', topRule = fa
   };
   return (
     <figure
+      ref={figRef}
       className="cl-frame"
-      onMouseMove={isVideo ? undefined : onMove}
-      onMouseLeave={isVideo ? undefined : onLeave}
+      onMouseMove={loupe ? onMove : undefined}
+      onMouseLeave={loupe ? onLeave : undefined}
       style={{
         position: 'relative', margin: 0, width: '100%',
         aspectRatio: isVideo ? (natRatio || ratio) : ratio, overflow: 'hidden',
         borderRadius: 'var(--r-4)', border: 'none',
         background: invert ? '#0B1416' : 'var(--surface-1)',
-        cursor: isVideo ? undefined : 'zoom-in',
+        cursor: loupe ? 'zoom-in' : undefined,
         ...style,
       }}
     >
       {isVideo ? (
-        <video
-          src={video} poster={poster} autoPlay muted loop playsInline preload="metadata" onLoadedMetadata={onMeta}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-        />
+        loadVideo && (
+          <video
+            src={video} poster={poster} autoPlay muted loop playsInline preload="metadata" onLoadedMetadata={onMeta}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        )
       ) : (
         <img
           ref={imgRef}
-          src={src} alt={label || ''} loading="lazy"
+          src={src} alt={label || ''} loading="lazy" width={ratioW} height={ratioH}
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block',
             transform: 'scale(1)', transformOrigin: 'center',

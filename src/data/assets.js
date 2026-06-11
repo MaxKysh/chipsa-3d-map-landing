@@ -18,5 +18,5 @@ export const ASSETS = {
   crowd: '/images/crowd.jpg',
   // brand
   logo: '/images/logo-chipsa.png',
-  mark: '/images/mark-chipsa.png',
+  // mark-chipsa.png is referenced directly as the favicon in index.html
 };

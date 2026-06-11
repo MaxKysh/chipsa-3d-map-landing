@@ -7,7 +7,7 @@ import { ASSETS } from '../data/assets.js';
 
 /* On-system card: toned surface, small radius, no shadow. Hover lifts the card and
    reveals a cursor-following teal spotlight with faint concentric rings — text stays light. */
-function Card({ icon, index, title, body, topRule = false, compact = false }) {
+function Card({ icon, index, title, body, compact = false }) {
   const ref = React.useRef(null);
   const onMove = (e) => {
     const el = ref.current; if (!el) return;
@@ -54,7 +54,7 @@ export function Value({ t }) {
       <div className="cl-grid-3">
         {v.items.map((it, i) => (
           <Reveal key={i} className="rv-scale" style={{ transitionDelay: `${i * 90}ms` }}>
-            <Card icon={it.icon} index={String(i + 1).padStart(2, '0')} title={it.title} body={it.body} topRule />
+            <Card icon={it.icon} index={String(i + 1).padStart(2, '0')} title={it.title} body={it.body} />
           </Reveal>
         ))}
       </div>
@@ -146,7 +146,7 @@ export function CTA({ t }) {
   const c = t.cta;
   return (
     <section className="cl-cta" id="contact" data-screen-label="contact">
-      <img className="cl-cta__bg" src={ASSETS.crowd} alt="" aria-hidden="true" />
+      <img className="cl-cta__bg" src={ASSETS.crowd} alt="" aria-hidden="true" width="1920" height="1434" />
       <div className="cl-cta__scrim" aria-hidden="true" />
       <div className="shell cl-cta__grid">
         <Reveal>
@@ -178,7 +178,7 @@ export function SiteFooter({ t }) {
     <footer className="cl-footer">
       <div className="shell cl-footer__inner">
         <div className="cl-footer__brand">
-          <img src={ASSETS.logo} alt="Chipsa" />
+          <img src={ASSETS.logo} alt="Chipsa" width="352" height="58" />
           <span className="cl-footer__tag">{f.tagline}</span>
         </div>
         <div className="cl-footer__meta">

@@ -13,8 +13,8 @@ export function Demo({ t }) {
         {/* Overview + booth popup — paired */}
         <div>
           <Reveal className="cl-pair">
-            <Frame src={ASSETS.mainView} label={d.mainLabel} ratio="4 / 3" invert />
-            <Frame src={ASSETS.popup} label={d.popupLabel} ratio="4 / 3" invert />
+            <Frame src={ASSETS.mainView} label={d.mainLabel} ratio="4 / 3" invert zoomable />
+            <Frame src={ASSETS.popup} label={d.popupLabel} ratio="4 / 3" invert zoomable />
           </Reveal>
           <Caption kicker={d.mainPopup.capKicker} invert>{d.mainPopup.cap}</Caption>
         </div>
@@ -30,8 +30,8 @@ export function Demo({ t }) {
         {/* Standard vs premium — the commercial argument */}
         <div>
           <Reveal className="cl-pair cl-pair--compare">
-            <Frame src={ASSETS.standardStand} label={d.stdLabel} ratio="4 / 3" invert />
-            <Frame src={ASSETS.premiumStand} label={d.premLabel} ratio="4 / 3" invert />
+            <Frame src={ASSETS.standardStand} label={d.stdLabel} ratio="4 / 3" invert zoomable />
+            <Frame src={ASSETS.premiumStand} label={d.premLabel} ratio="4 / 3" invert zoomable />
           </Reveal>
           <Caption kicker={d.compare.capKicker} invert>{d.compare.cap}</Caption>
         </div>
@@ -47,8 +47,8 @@ export function Demo({ t }) {
         {/* Mobile context — phone in hand + two phones */}
         <div>
           <Reveal className="cl-pair">
-            <Frame src={ASSETS.phoneInHand} label={d.handLabel} ratio="4 / 3" invert />
-            <Frame src={ASSETS.phones} label={d.phonesLabel} ratio="4 / 3" invert />
+            <Frame src={ASSETS.phoneInHand} label={d.handLabel} ratio="4 / 3" invert zoomable />
+            <Frame src={ASSETS.phones} label={d.phonesLabel} ratio="4 / 3" invert zoomable />
           </Reveal>
           <Caption kicker={d.mobileContext.capKicker} invert>{d.mobileContext.cap}</Caption>
         </div>

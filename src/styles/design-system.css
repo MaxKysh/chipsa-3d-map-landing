@@ -6,7 +6,7 @@
    ============================================================ */
 
 /* ---- Fonts ---- */
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Arimo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+/* Loaded via <link rel="preconnect"> + stylesheet in index.html (non-render-blocking). */
 
 /* ============================================================
    COLOR TOKENS — dark base, surfaces lift through tone not shadow.
@@ -90,7 +90,7 @@
    TYPOGRAPHY TOKENS — bold scale, type runs large.
    ============================================================ */
 :root {
-  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-display: 'Unbounded', system-ui, sans-serif;
   --font-sans: 'Helvetica Neue', 'Helvetica', 'Arimo', Arial, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
@@ -330,10 +330,8 @@ a { color: inherit; text-decoration: none; }
   /* directional / scale variants — pick per element for visual variety */
   .reveal.rv-scale { transform: translateY(20px) scale(0.965); }
   .reveal.rv-left  { transform: translateX(-28px); }
-  .reveal.rv-right { transform: translateX(28px); }
   .reveal.rv-scale[data-inview],
-  .reveal.rv-left[data-inview],
-  .reveal.rv-right[data-inview] { transform: none; }
+  .reveal.rv-left[data-inview] { transform: none; }
 }
 
 /* Focus — visible, branded */
@@ -358,9 +356,9 @@ a { color: inherit; text-decoration: none; }
 .clbtn:not(.clbtn--ghost):not([data-disabled]):hover { transform: scale(1.03); }
 .clbtn__base { position:relative; z-index:1; display:inline-flex; align-items:center; gap:.6em; }
 .clbtn__reveal { position:absolute; inset:0; opacity:1;
-  clip-path: circle(0px at var(--mx) var(--my));
+  clip-path: circle(0px at var(--rx, 50%) var(--ry, 50%));
   transition: clip-path 260ms var(--ease-out); }
-.clbtn:not([data-disabled]):hover .clbtn__reveal { clip-path: circle(150% at var(--mx) var(--my));
+.clbtn:not([data-disabled]):hover .clbtn__reveal { clip-path: circle(150% at var(--rx, 50%) var(--ry, 50%));
   transition: clip-path 900ms var(--ease-expo); }
 .clbtn__reveal--flip { z-index:2; display:inline-flex; align-items:center;
   background: var(--cl-inv-bg); color: var(--cl-inv-text); }

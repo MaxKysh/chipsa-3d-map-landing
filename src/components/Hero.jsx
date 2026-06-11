@@ -21,7 +21,7 @@ export function MobileNav({ t, onContact }) {
 
       <nav className="cl-mnav__panel" aria-hidden={!open}>
         <a href="#top" className="cl-mnav__logo" aria-label="Chipsa" onClick={() => setOpen(false)}>
-          <img src={ASSETS.logo} alt="Chipsa" />
+          <img src={ASSETS.logo} alt="Chipsa" width="352" height="58" />
           <span className="cl-nav__dev">DEV</span>
         </a>
         <ul className="cl-mnav__links">
@@ -47,7 +47,7 @@ export function MobileNav({ t, onContact }) {
 
       <button
         className="cl-burger"
-        aria-label={open ? 'Закрыть меню' : 'Открыть меню'}
+        aria-label={t.nav.menu}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
       >
@@ -86,7 +86,7 @@ export function Nav({ t, onContact }) {
     <header className={`cl-nav${onLight ? ' cl-nav--on-light' : ''}`}>
       <div className="cl-nav__inner shell">
         <a href="#top" className="cl-nav__logo" aria-label="Chipsa">
-          <img src={ASSETS.logo} alt="Chipsa" />
+          <img src={ASSETS.logo} alt="Chipsa" width="352" height="58" />
           <span className="cl-nav__dev">DEV</span>
         </a>
         <nav className="cl-nav__links">
@@ -139,7 +139,7 @@ export function Hero({ t, heroMode, onContact, onDemo }) {
             </Reveal>
           </div>
           <Reveal delay={2} className="cl-hero__scene">
-            <Frame video={ASSETS.hero3d} ratio="3 / 4" topRule />
+            <Frame video={ASSETS.hero3d} ratio="3 / 4" />
           </Reveal>
         </div>
       </section>
@@ -149,7 +149,7 @@ export function Hero({ t, heroMode, onContact, onDemo }) {
   /* default: full-bleed looping video behind the headline */
   return (
     <section className="cl-hero cl-hero--video" id="top">
-      <video className="cl-hero__video" src={ASSETS.hero3d} autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
+      <video className="cl-hero__video" src={ASSETS.hero3d} poster="/images/hero-poster.jpg" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
       <div className="cl-hero__scrim" aria-hidden="true" />
       <div className="shell cl-hero__content">
         <Reveal>{title}</Reveal>

@@ -29,18 +29,7 @@ img, video { display: block; }
 /* over a light (inverted) section: dark text + dark logo */
 .cl-nav--on-light .cl-nav__links a { color: var(--ink-900); }
 .cl-nav--on-light .cl-nav__links a:hover { color: var(--accent); }
-.cl-nav--on-light .cl-lang { background: rgba(8,16,18,0.06); }
-.cl-nav--on-light .cl-lang button { color: var(--fg-on-paper-3); }
-.cl-nav--on-light .cl-lang button.is-active { color: #07090A; }
 .cl-nav__right { display: flex; align-items: center; gap: var(--s-5); }
-.cl-lang { display: inline-flex; background: var(--surface-1); border-radius: var(--r-2); overflow: hidden; }
-.cl-lang button {
-  font-family: var(--font-mono); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase;
-  padding: 7px 12px; border: none; cursor: pointer; background: transparent; color: var(--text-muted);
-  font-weight: var(--w-medium);
-  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
-}
-.cl-lang button.is-active { background: var(--accent); color: #07090A; font-weight: var(--w-semibold); }
 
 /* ============ HERO ============ */
 .cl-hero { position: relative; }
@@ -61,10 +50,9 @@ img, video { display: block; }
 .cl-hero__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: var(--s-8); align-items: center; }
 .cl-hero__scene { width: 100%; max-width: 460px; margin-left: auto; }
 
-.cl-hero__eyebrow { margin-bottom: var(--s-5); }
 .cl-hero__title {
   font-family: var(--font-display); font-weight: var(--w-semibold);
-  font-size: clamp(2.6rem, 6.2vw, 6rem); line-height: 1.0; letter-spacing: -0.03em;
+  font-size: clamp(2.1rem, 5vw, 4.5rem); line-height: 1.04; letter-spacing: -0.03em;
   color: var(--fg-1); margin-bottom: var(--s-5); text-wrap: balance;
 }
 .cl-hero--wash .cl-hero__title { font-size: clamp(2.4rem, 5vw, 4.6rem); }
@@ -75,11 +63,6 @@ img, video { display: block; }
 }
 .cl-hero--wash .cl-hero__lead { color: var(--text-body); }
 .cl-hero__actions { display: flex; gap: var(--s-4); flex-wrap: wrap; }
-.cl-hero__filenote {
-  position: absolute; right: var(--gutter); bottom: var(--s-4); z-index: 2;
-  font-family: var(--font-mono); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase;
-  color: rgba(244,247,246,0.42);
-}
 
 /* scroll hint — bottom-center prompt with a bouncing chevron */
 .cl-hero__scroll {
@@ -123,7 +106,7 @@ img, video { display: block; }
 .cl-caption { margin-top: var(--s-7); margin-left: 0; width: auto; max-width: 72ch; padding-left: 0; }
 .cl-caption__kicker {
   display: block; font-family: var(--font-display); font-weight: var(--w-semibold);
-  font-size: clamp(1.375rem, 1.9vw, 1.75rem); line-height: var(--lh-snug); letter-spacing: -0.015em;
+  font-size: clamp(1.375rem, 1.9vw, 1.75rem); line-height: 1.22; letter-spacing: -0.015em;
   color: var(--text-strong); margin-bottom: var(--s-4); text-wrap: balance;
 }
 .cl-caption__body { font-size: var(--t-body); line-height: var(--lh-body); }
@@ -134,8 +117,6 @@ img, video { display: block; }
 .cl-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); align-items: stretch; }
 .cl-grid-3 > .reveal { display: flex; }
 .cl-grid-3 > .reveal > .cl-card { flex: 1; }
-/* wider gap from the icon+index row down to the title (3× the inner gap) */
-.cl-grid-3 .cl-card__top { margin-bottom: var(--s-6); }
 .cl-grid-niche { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s-5); }
 .cl-niche-full { grid-column: 1 / -1; }
 
@@ -166,7 +147,8 @@ img, video { display: block; }
 .cl-card:hover { transform: translateY(-4px); background: var(--surface-2); }
 .cl-card:hover::before, .cl-card:hover::after { opacity: 1; }
 .cl-card__inner { position: relative; z-index: 1; display: flex; flex-direction: column; gap: var(--s-4); }
-.cl-card__top { display: flex; align-items: center; justify-content: space-between; }
+/* wider gap from the icon+index row down to the title (3× the inner gap), all cards */
+.cl-card__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--s-6); }
 .cl-card__index { font-family: var(--font-mono); font-size: var(--t-mono-sm); letter-spacing: var(--ls-mono); color: var(--accent-text); }
 .cl-card__title { font-family: var(--font-display); font-weight: var(--w-semibold); font-size: var(--t-h3); letter-spacing: -0.015em; color: var(--text-strong); }
 .cl-card__title--sm { font-size: 1.375rem; }

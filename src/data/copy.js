@@ -11,10 +11,9 @@ export const COPY = {
         { key: 'process', label: 'Процесс' },
       ],
       cta: 'Связаться',
+      menu: 'Меню',
     },
     hero: {
-      forWhomLabel: 'Для кого',
-      forWhom: 'Организаторы конференций, выставок и B2B-мероприятий',
       title: ['3D-карта зала,', 'которая работает на', 'вашу конференцию'],
       highlight: 'вашу конференцию',
       lead: 'Интерактивная навигация для участников. Дополнительные источники монетизации для организатора. WebGL в браузере — без приложений и установок.',
@@ -87,7 +86,7 @@ export const COPY = {
       num: '06', kicker: 'Команда',
       title: 'Кто за этим стоит',
       paras: [
-        ['Chipsa', ' — дизайн-студия из Нови-Сада. Специализация: премиальные сайты с 3D, WebGL и интерактивом.'],
+        ['Chipsa', ' — дизайн-студия. Специализация: премиальные сайты с 3D, WebGL и интерактивом.'],
         ['', 'С 2009 года выпустили более 200 проектов. Юридическое лицо в Сербии и России — работаем с международными клиентами и принимаем платежи напрямую.'],
         ['Design Partner', ' конференции ', { label: 'BWiGA Adriatic Edition 2026', href: 'https://adriaticawards.com/' }, '.'],
       ],
@@ -107,7 +106,7 @@ export const COPY = {
         { key: 'Живое демо', val: '3d-plan.chipsa.ru', href: 'https://3d-plan.chipsa.ru/' },
       ],
     },
-    footer: { tagline: '3D-карта зала для конференций', made: 'Дизайн-студия · Нови-Сад, Сербия', year: '© 2026 Chipsa' },
+    footer: { tagline: '3D-карта зала для конференций', made: 'Дизайн-студия · Сербия', year: '© 2026 Chipsa' },
   },
 
   en: {
@@ -120,10 +119,9 @@ export const COPY = {
         { key: 'process', label: 'Process' },
       ],
       cta: 'Get in touch',
+      menu: 'Menu',
     },
     hero: {
-      forWhomLabel: 'For whom',
-      forWhom: 'Organizers of conferences, expos and B2B events',
       title: ['A 3D hall map that', 'works for your', 'conference'],
       highlight: 'your',
       lead: 'Interactive wayfinding for attendees. New revenue streams for the organizer. WebGL in the browser — no apps, no installs.',
@@ -196,7 +194,7 @@ export const COPY = {
       num: '06', kicker: 'Studio',
       title: 'Who’s behind it',
       paras: [
-        ['Chipsa', ' is a design studio from Novi Sad. We specialize in premium sites with 3D, WebGL and motion.'],
+        ['Chipsa', ' is a design studio. We specialize in premium sites with 3D, WebGL and motion.'],
         ['', 'Since 2009 we’ve shipped more than 200 projects. A legal entity in Serbia and Russia — we work with international clients and take payments directly.'],
         ['Design Partner', ' of the ', { label: 'BWiGA Adriatic Edition 2026', href: 'https://adriaticawards.com/' }, ' conference.'],
       ],
@@ -216,6 +214,6 @@ export const COPY = {
         { key: 'Live demo', val: '3d-plan.chipsa.ru', href: 'https://3d-plan.chipsa.ru/' },
       ],
     },
-    footer: { tagline: '3D hall map for conferences', made: 'Design studio · Novi Sad, Serbia', year: '© 2026 Chipsa' },
+    footer: { tagline: '3D hall map for conferences', made: 'Design studio · Serbia', year: '© 2026 Chipsa' },
   },
 };

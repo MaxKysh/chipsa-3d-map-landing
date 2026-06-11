@@ -53,11 +53,21 @@ export function Button({
   const isGhost = pal.ghost;
   const facePad = isGhost ? `${pad.split(' ')[0]} 0` : pad;
 
-  const setPos = (e) => {
+  // Spotlight follows the cursor (--mx/--my). The reveal's clip-path uses a
+  // separate origin (--rx/--ry) fixed on enter, so moving the mouse doesn't
+  // re-target the expanding circle (which made the arrow flicker).
+  const setSpot = (e) => {
     const el = e.currentTarget;
     const r = el.getBoundingClientRect();
     el.style.setProperty('--mx', `${e.clientX - r.left}px`);
     el.style.setProperty('--my', `${e.clientY - r.top}px`);
+  };
+  const setOrigin = (e) => {
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--rx', `${e.clientX - r.left}px`);
+    el.style.setProperty('--ry', `${e.clientY - r.top}px`);
+    setSpot(e);
   };
 
   const Face = ({ className }) => (
@@ -86,8 +96,8 @@ export function Button({
       {...tagProps}
       {...(disabled ? { 'data-disabled': '' } : {})}
       onClick={disabled ? undefined : onClick}
-      onPointerMove={disabled ? undefined : setPos}
-      onPointerEnter={disabled ? undefined : setPos}
+      onPointerMove={disabled ? undefined : setSpot}
+      onPointerEnter={disabled ? undefined : setOrigin}
       style={rootStyle}
       {...rest}
     >
@@ -107,7 +117,7 @@ const COUNT_STAGGER = 340;
 
 /* ---- Stat — big display number + mono label; optional gradient ink.
    Numeric values count up like a mechanical counter when scrolled into view. ---- */
-export function Stat({ value, label, suffix = '', grad = false, align = 'start', index = 0, style, ...rest }) {
+export function Stat({ value, label, grad = false, align = 'start', index = 0, style, ...rest }) {
   // split a leading integer from any trailing glyphs ('200+' -> 200 / '+', 'RS · RU' -> no number)
   const m = String(value).match(/^(\d+)(.*)$/);
   const target = m ? parseInt(m[1], 10) : null;
@@ -164,7 +174,6 @@ export function Stat({ value, label, suffix = '', grad = false, align = 'start',
         backgroundClip: grad ? 'text' : 'border-box',
       }}>
         {target == null ? shown : <>{shown}{tail}</>}
-        {suffix && <span style={{ fontSize: '0.55em', verticalAlign: 'baseline' }}>{suffix}</span>}
       </span>
       <span style={{
         fontFamily: 'var(--font-mono)', fontSize: 'var(--t-mono-sm)', letterSpacing: 'var(--ls-mono)',
