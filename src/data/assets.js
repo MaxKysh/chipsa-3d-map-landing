@@ -17,6 +17,6 @@ export const ASSETS = {
   macbookLive: '/images/macbook-live.jpg',
   crowd: '/images/crowd.jpg',
   // brand
-  logo: '/images/logo-chipsa-igaming.png',
+  logo: '/images/logo-chipsa.png',
   mark: '/images/mark-chipsa.png',
 };

@@ -41,7 +41,7 @@ export function Nav({ t, lang, setLang, onContact }) {
     <header className={`cl-nav${onLight ? ' cl-nav--on-light' : ''}`}>
       <div className="cl-nav__inner shell">
         <a href="#top" className="cl-nav__logo" aria-label="Chipsa">
-          <img src={ASSETS.logo} alt="Chipsa iGaming" />
+          <img src={ASSETS.logo} alt="Chipsa" />
         </a>
         <nav className="cl-nav__links">
           {t.nav.links.map((l) => (

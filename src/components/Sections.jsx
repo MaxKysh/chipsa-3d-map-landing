@@ -165,7 +165,7 @@ export function SiteFooter({ t }) {
     <footer className="cl-footer">
       <div className="shell cl-footer__inner">
         <div className="cl-footer__brand">
-          <img src={ASSETS.logo} alt="Chipsa iGaming" />
+          <img src={ASSETS.logo} alt="Chipsa" />
           <span className="cl-footer__tag">{f.tagline}</span>
         </div>
         <div className="cl-footer__meta">
