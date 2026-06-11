@@ -11,12 +11,12 @@ const HERO_MODE = 'video'; // 'video' | 'wash'
 const REVEAL = true;
 
 export default function App() {
-  // Language comes from the URL (?lang=en | ?lang=ru); default English.
-  // Send the bare link (or ?lang=en) to international conferences, ?lang=ru to RU ones.
+  // Language from the URL path: /ru → Russian, everything else (/en, /) → English.
+  // Each language is its own page (/en, /ru) with its own SEO/OG meta.
   const lang = React.useMemo(() => {
     try {
-      const p = new URLSearchParams(window.location.search).get('lang');
-      if (p === 'en' || p === 'ru') return p;
+      const p = window.location.pathname;
+      if (p === '/ru' || p.startsWith('/ru/')) return 'ru';
     } catch (e) {}
     return 'en';
   }, []);
