@@ -1,7 +1,6 @@
 /* Chipsa map landing — Nav + Hero. */
 import React from 'react';
 import { Button } from './ds.jsx';
-import { Reveal, Frame } from './primitives.jsx';
 import { ASSETS } from '../data/assets.js';
 
 /* Mobile nav — a thumb-reach FAB at bottom-right that morphs (burger ↔ X) and
@@ -115,7 +114,7 @@ function renderLine(line, highlight) {
   );
 }
 
-export function Hero({ t, heroMode, onContact, onDemo }) {
+export function Hero({ t, onContact, onDemo }) {
   const h = t.hero;
   const title = (
     <h1 className="cl-hero__title">
@@ -125,39 +124,18 @@ export function Hero({ t, heroMode, onContact, onDemo }) {
     </h1>
   );
 
-  if (heroMode === 'wash') {
-    return (
-      <section className="cl-hero cl-hero--wash" id="top">
-        <div className="cl-hero__atmos" aria-hidden="true" />
-        <div className="shell cl-hero__grid">
-          <div className="cl-hero__copy">
-            <Reveal>{title}</Reveal>
-            <Reveal delay={1} as="p" className="cl-hero__lead">{h.lead}</Reveal>
-            <Reveal delay={2} className="cl-hero__actions">
-              <Button size="lg" variant="primary" icon onClick={onDemo}>{h.primary}</Button>
-              <Button size="lg" variant="ghost" icon onClick={onContact}>{h.secondary}</Button>
-            </Reveal>
-          </div>
-          <Reveal delay={2} className="cl-hero__scene">
-            <Frame video={ASSETS.hero3d} ratio="3 / 4" />
-          </Reveal>
-        </div>
-      </section>
-    );
-  }
-
-  /* default: full-bleed looping video behind the headline */
+  /* full-bleed looping video behind the headline */
   return (
     <section className="cl-hero cl-hero--video" id="top">
       <video className="cl-hero__video" src={ASSETS.hero3d} poster="/images/hero-poster.jpg" autoPlay muted loop playsInline preload="metadata" aria-hidden="true" />
       <div className="cl-hero__scrim" aria-hidden="true" />
-      <div className="shell cl-hero__content">
-        <Reveal>{title}</Reveal>
-        <Reveal delay={1} as="p" className="cl-hero__lead">{h.lead}</Reveal>
-        <Reveal delay={2} className="cl-hero__actions">
+      <div className="shell cl-hero__content cl-hero__content--intro">
+        {title}
+        <p className="cl-hero__lead">{h.lead}</p>
+        <div className="cl-hero__actions">
           <Button size="lg" variant="primary" icon onClick={onDemo}>{h.primary}</Button>
           <Button size="lg" variant="invert" icon onClick={onContact}>{h.secondary}</Button>
-        </Reveal>
+        </div>
       </div>
       <a className="cl-hero__scroll" href="#what" aria-label={h.scroll}>
         <span className="cl-hero__scroll-label">{h.scroll}</span>

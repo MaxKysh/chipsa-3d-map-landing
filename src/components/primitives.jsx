@@ -70,13 +70,13 @@ export function Reveal({ as = 'div', delay, className = '', children, style, ...
 }
 
 /* ---- Section shell + editorial two-column header ---- */
-export function Section({ id, invert = false, tight = false, children, style }) {
+export function Section({ id, invert = false, children, style }) {
   return (
     <section
       id={id}
       data-screen-label={id}
       className={`cl-section${invert ? ' surface-invert' : ''}`}
-      style={{ paddingBlock: tight ? 'var(--section-y-tight)' : 'var(--section-y)', position: 'relative', ...style }}
+      style={{ paddingBlock: 'var(--section-y)', position: 'relative', ...style }}
     >
       <div className="shell">{children}</div>
     </section>
@@ -107,7 +107,7 @@ export function SectionHead({ num, kicker, title, lede, invert = false }) {
 
 /* ---- Framed media (small radius, no shadow).
    Videos adopt their clip's real aspect ratio on load so they never crop. ---- */
-export function Frame({ src, video, poster, label, ratio = '4 / 3', invert = false, zoomable = false, zoom = 1.5, style }) {
+export function Frame({ src, video, label, ratio = '4 / 3', invert = false, zoomable = false, zoom = 1.5, style }) {
   const isVideo = !!video;
   const loupe = zoomable && !isVideo; // cursor-driven magnify, opt-in (small paired images)
   const [ratioW, ratioH] = String(ratio).split('/').map((n) => parseFloat(n.trim()) || 1); // intrinsic-size hint for the img
@@ -177,7 +177,7 @@ export function Frame({ src, video, poster, label, ratio = '4 / 3', invert = fal
       {isVideo ? (
         loadVideo && (
           <video
-            src={video} poster={poster} autoPlay muted loop playsInline preload="metadata" onLoadedMetadata={onMeta}
+            src={video} autoPlay muted loop playsInline preload="metadata" onLoadedMetadata={onMeta}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         )

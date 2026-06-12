@@ -7,7 +7,6 @@ import { Demo } from './components/Demo.jsx';
 import { What, Value, Niches, Process, About, CTA, SiteFooter } from './components/Sections.jsx';
 import { initSmoothScroll } from './lib/smoothScroll.js';
 
-const HERO_MODE = 'video'; // 'video' | 'wash'
 const REVEAL = true;
 
 export default function App() {
@@ -37,7 +36,7 @@ export default function App() {
       <Nav t={copy} onContact={() => scrollTo('contact')} />
       <MobileNav t={copy} onContact={() => scrollTo('contact')} />
       <main>
-        <Hero t={copy} heroMode={HERO_MODE} onContact={() => scrollTo('contact')} onDemo={() => window.open('https://3d-plan.chipsa.ru/', '_blank', 'noopener,noreferrer')} />
+        <Hero t={copy} onContact={() => scrollTo('contact')} onDemo={() => window.open('https://3d-plan.chipsa.ru/', '_blank', 'noopener,noreferrer')} />
         <What t={copy} />
         <Value t={copy} />
         <Demo t={copy} />

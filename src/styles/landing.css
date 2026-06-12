@@ -50,23 +50,17 @@ img, video { display: block; }
     radial-gradient(120% 80% at 82% 4%, rgba(31,163,154,0.18), transparent 58%);
 }
 .cl-hero__content { position: relative; z-index: 2; width: 100%; padding-block: calc(52px + 32px) 0; }
-.cl-hero--wash { padding-block: calc(18vh) 9vh; overflow: hidden; }
-.cl-hero__atmos { position: absolute; inset: 0; z-index: 0; background: var(--grad-atmos); }
-.cl-hero__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.08fr 0.92fr; gap: var(--s-8); align-items: center; }
-.cl-hero__scene { width: 100%; max-width: 460px; margin-left: auto; }
 
 .cl-hero__title {
   font-family: var(--font-display); font-weight: var(--w-semibold);
   font-size: clamp(2.1rem, 5vw, 4.5rem); line-height: 1.04; letter-spacing: -0.03em;
   color: var(--fg-1); margin-bottom: var(--s-5); text-wrap: balance;
 }
-.cl-hero--wash .cl-hero__title { font-size: clamp(2.4rem, 5vw, 4.6rem); }
 .cl-hero__line { display: block; }
 .cl-hero__lead {
   font-size: var(--t-lead); line-height: 1.42; color: rgba(244,247,246,0.86);
   max-width: 44ch; margin-bottom: var(--s-6);
 }
-.cl-hero--wash .cl-hero__lead { color: var(--text-body); }
 .cl-hero__actions { display: flex; gap: var(--s-4); flex-wrap: wrap; }
 
 /* scroll hint — bottom-center prompt with a bouncing chevron */
@@ -88,6 +82,35 @@ img, video { display: block; }
   50%      { transform: translateY(7px); opacity: 1; }
 }
 @media (prefers-reduced-motion: reduce) { .cl-hero__scroll-arrow { animation: none; } }
+
+/* ============ HERO INTRO (on page load) ============ */
+@keyframes cl-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cl-nav-in { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+@keyframes cl-rise-in { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+@keyframes cl-line-in { from { opacity: 0; transform: translateY(0.6em) rotateX(40deg); } to { opacity: 1; transform: none; } }
+
+/* 1 — background video + scrim fade in */
+.cl-hero__video { animation: cl-fade-in 1.2s var(--ease-out) both; }
+.cl-hero--video .cl-hero__scrim { animation: cl-fade-in 1.2s var(--ease-out) both; }
+/* 2 — menu / nav drops in */
+.cl-nav { animation: cl-nav-in 0.7s var(--ease-out) both 0.15s; }
+.cl-burger { animation: cl-fade-in 0.6s var(--ease-out) both 0.35s; }
+/* 3 — headline rises line-by-line with a subtle 3D tilt */
+.cl-hero__content--intro .cl-hero__title { perspective: 900px; }
+.cl-hero__content--intro .cl-hero__line { transform-origin: top center; animation: cl-line-in 0.8s var(--ease-out) both; }
+.cl-hero__content--intro .cl-hero__line:nth-child(1) { animation-delay: 0.35s; }
+.cl-hero__content--intro .cl-hero__line:nth-child(2) { animation-delay: 0.47s; }
+.cl-hero__content--intro .cl-hero__line:nth-child(3) { animation-delay: 0.59s; }
+/* 4 — lead text, 5 — buttons */
+.cl-hero__content--intro .cl-hero__lead { animation: cl-rise-in 0.8s var(--ease-out) both 0.74s; }
+.cl-hero__content--intro .cl-hero__actions { animation: cl-rise-in 0.8s var(--ease-out) both 0.9s; }
+.cl-hero__scroll { animation: cl-fade-in 0.8s var(--ease-out) both 1.15s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cl-hero__video, .cl-hero--video .cl-hero__scrim, .cl-nav, .cl-burger,
+  .cl-hero__content--intro .cl-hero__line, .cl-hero__content--intro .cl-hero__lead,
+  .cl-hero__content--intro .cl-hero__actions, .cl-hero__scroll { animation: none; }
+}
 
 /* ============ SECTION HEAD ============ */
 .cl-head { display: grid; grid-template-columns: calc(50% + var(--s-3)) 1fr; gap: 0; margin-bottom: var(--s-8); align-items: baseline; }
@@ -284,8 +307,6 @@ img, video { display: block; }
   .cl-hero--video { margin-top: 0; min-height: 100vh; min-height: 100dvh; }
   .cl-hero__content { padding-block: var(--s-8) var(--s-9); }
   .cl-hero__scroll { left: var(--gutter); transform: none; align-items: flex-start; }
-  .cl-hero__grid { grid-template-columns: 1fr; gap: var(--s-7); }
-  .cl-hero__scene { max-width: 380px; margin: 0; }
   .cl-head { grid-template-columns: 1fr; gap: var(--s-6); margin-bottom: var(--s-7); }
   .cl-about__text { padding-right: 0; }
   .cl-head__rail { display: flex; flex-direction: row; align-items: baseline; gap: var(--s-4); padding-top: 0; }
